@@ -1,0 +1,125 @@
+set number
+syntax on
+
+
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+
+set smartindent
+
+inoremap ' ''<Esc>i
+inoremap " ""<Esc>i
+inoremap ( ()<Esc>i
+inoremap [ []<Esc>i
+inoremap < <><Esc>i
+inoremap { {<cr>}<Esc>O
+
+
+
+let mapleader=','
+inoremap <leader>w <Esc>:w<cr>
+
+inoremap jj <Esc>
+
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
+
+" Specify a directory for plugins
+" - For Neovim: ~/.local/share/nvim/plugged
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
+
+Plug 'mhinz/vim-startify' "7
+Plug 'vim-airline/vim-airline' "19
+Plug 'vim-airline/vim-airline-themes' "14
+Plug 'Yggdroot/indentLine' "5
+Plug 'w0ng/vim-hybrid' "8
+"Plug 'altercation/solarized'
+Plug 'morhetz/gruvbox' "17
+Plug 'scrooloose/nerdtree' "12
+Plug 'ctrlpvim/ctrlp.vim' "18
+Plug 'easymotion/vim-easymotion' "20
+Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' } "10
+Plug 'tpope/vim-surround' "15
+"Plug 'sbdchd/neoformat' "13
+Plug 'brooth/far.vim' "9
+"Plug 'tpope/vim-fugitive' "git原因
+"Plug 'junegunn/gv.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'sbdchd/neoformat' "13
+Plug 'majutsushi/tagbar' "16
+Plug 'lfv89/vim-interestingwords' "6
+Plug 'tpope/vim-commentary' "11
+"Plugin 'w0rp/ale' python版本问题
+"if has('nvim')
+"  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"else
+"  Plug 'Shougo/deoplete.nvim'
+"  Plug 'roxma/nvim-yarp'
+"  Plug 'roxma/vim-hug-neovim-rpc'
+"endif
+"Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+"Plug 'junegunn/fzf.vim'
+"Ag[PATTERN]模糊搜索字符 
+"Files[PATH]模糊搜索路径
+
+" Initialize plugin system
+call plug#end()
+
+nmap ss <Plug>(easymotion-s2)
+set background=dark
+colorscheme gruvbox
+"autocmd vimenter * NERDTree
+nnoremap <leader>v :NERDTreeFind<cr>
+nnoremap <leader>g :NERDTreeToggle<cr>
+",v 跳转目录 <C-w>p跳转文件
+let NERDTreeShowHidden=1
+let NERDTreeIgnore=[
+	\ '\.git$','\.hg$','\.svn$','\stversions$','\.pyc$','\.pyo$','\.svn$','\.swp$',
+	\'\.DS_Store$','\.sass-cache$','__pycache__$','\.egg-info$','\.ropeproject$',
+       	\ ]
+"模糊搜索，只能在当前目录根目录下
+let g:ctrlp_map ='<c-p>'
+
+nmap ss <Plug>(easymotion-s2)
+
+
+"python-mode
+let g:pymode_python='python3'
+let g:pymode_trim_whitespaces=1
+let g:pymode_doc=1
+let g:pymode_doc_bind='K'
+let g:pymode_rope_goto_definition_bind="<C-]>"
+let g:pymode_lint=1
+let g:pymode_lint_checkers=['pyflakes', 'pep8', 'mccabe', 'pylint']
+let g:pymode_options_max_line_length=120
+
+nnoremap <leader>t :TagbarToggle<CR>
+
+let g:ctrlp_working_path_mode = 'ra'
+
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
+
+let g:ctrlp_user_command = 'find %s -type f'        " MacOSX/Linux
+
+
+"python 版本问题
+"deoplete
+"let g:deoplete#enable_at_startup = 1
+"set completeopt-=preview
+
+"gitgutter
+set updatetime=100 "100ms"
