@@ -1,0 +1,201 @@
+ONE:
+normal ->insert:
+a/i/o/A/I/O
+
+insert ->normal:
+esc/ctrl+c/ctrl+[
+
+normal ->cmd:
+:wq保存退出
+:vs竖屏 :sp横屏
+:% s /.../.../g
+
+normal ->visual:
+v/V/ctrl+v (h/j/k/l移动)
+
+TWO:
+insert:
+ctrl+h删除上一个字符
+ctrl+w删除上一个单词
+ctrl+u删除当前行
+(也可用在终端：ctrl+a \ctrl+e \ctrl+f \ctrl+b)
+
+
+normal下：
+全文搜索: /str
+快速移动：h(左)j(下)k(上)l(右) number+G
+
+w/W移动到下一个word/WORD开头。e/E下一个word/WORD尾。
+b/B移动到上一个word/WORD开头。
+
+行间搜索:f{char}可移动到char字符上，t移动到char前一个字符，可用（；）/（，）继续该行搜索，F行尾搜索。
+  
+水平移动：0行首第一个字符，^第一个非空白字符，$行尾，g_行尾非空白字符
+
+
+垂直移动：()句子间{}段落间
+help(
+页面移动：gg/G 开头/结尾，ctrl+o快速返回， H/M/L 始/中/尾， ctrl+u/ctrl+f 上下翻页， zz中间
+
+快速删除:x删除字符 daw删除单词（dt):删除括号内内容/d$:删除至行尾/d0:删除至行首） x/d搭配数字多次执行
+
+快速修改：r(replace)替换字符 c(change){ct):删除括号内容并进入insert模式} s(substitute)替换并进入insert模式
+
+查找：/或？前向或反向 n/N上下跳转 */#当前单词前或后
+
+替换：[range] s[ubstitute]/"{pattern}"/"{string}"/[flags]  正则表达式：% s/\<..\>/../..
+range:范围 %表示全部
+pattern 替换的模式 string 替换后文本
+flags:g全局范围执行 c确认或拒绝修改 n报告次数而不替换
+
+多文件操作：
+buffer:打开文件的内存缓存区，:ls列举当前缓存区 :b n跳转第n个缓存区(:bpre :bnext :bfirst :blast :b buffer_name+tab补全跳转) :e buffer_name打开其他文件
+windows:buffer可视化的分割区，一个缓存区可打开多个窗口，每个窗口可打开不同缓存区，(:sp :vs ctrl+w+w(h/j/k/l,:h window-resize查看文档)切换...)
+Tab:可组织窗口为一个工作区，容纳一系列窗口的容器(:h tabpage)，(:table[dit]{filename} <C-w>T :tabc[close] :tabo[nly] :tabn[ext]{N} :tabn[ext] :tabp[revious]),多使用gt
+
+text object:
+[number]<commond>[text object]
+number表示次数 commond命令 d/c/y text object操作的文本对象，单词w，句子s，段落p
+iw表示inner word,选中单词
+aw表示a word，不但选中当前单词，还包括之后的空格
+
+复制粘贴：
+(normal):y和p d和p v命令选中y复制p粘贴 ggyG全选复制 :n,my numG快速跳转
+(insert):  :set paste :set nopaste x和p调换字符 ctrl+r+"系统剪贴板
+深入寄存器:"{register}指定寄存器,eg:"ayiw复制一个单词到寄存器a，"bdd删除当前行到寄存器b(:reg 寄存器)("ap "bp) {a-z 复制专用寄存器"0 系统剪贴板"+(:echo has('clipboard')) "%当前文件名 ".上次插入文本 }
+
+宏:一系列命令的集合，『录制』『回放』用在多行文本上
+q{register}录制
+@{register}回放
+eg{
+	qa+I+"+esc+A+"+esc+q+V+G+:normal @a
+	V+G+:normal I"+enter+:ctrl p+:normal A"
+}
+
+补全:
+ctrl+n ctrl+p 补全单词
+ctrl x + ctrl f 补全文件名
+ctrl+x ctrl+O 补全代码
+
+配色:
+:colorscheme 显示当前配色
+:solorscheme <ctrl+d> 显示所有配色
+:colorscheme 配色名 修改配色
+
+
+配置: :source PATH生效
+vim ~/.vimrc
+常用设置: 行号(set number) 主题(colorscheme ..) 高亮(syntax on) 高亮搜索(set hlsearch) 粘贴模式(set pastetoggle=<F2>) 折叠方式(set foldmethod=indent) 
+
+常用映射:设置leader键，常用","/" " let mapleader=","
+eg{":h option-list
+let mapleader=','
+inoremap <leader>w <Esc>:w<cr>
+inoremap jj <Esc>'^
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j 
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
+
+:unmap ...
+:imap <c-d> <Esc>ddi
+:vmap \ U visual模式下选中文本大小写转换(u/U)
+:map - x
+:map <space> viw
+:map <c-d> dd
+}用nmap/vmap/imap定义映射只在normal/visual/insert有效
+递归映射:类似于递归
+非递归映射:nnoremap/vnoremap/inoremap
+
+
+自定义vimscript函数和插件:
+vim-plug插件管理器：
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+PlugClean 清理插件，需要现在 .vimrc 里面删除或注释掉
+
+搜索插件:
+google关键词搜索
+http://vimawesome.com/
+网上开源配置
+
+
+修改启动界面vim-startify插件:
+	Plug 'mhinz/vim-startify'
+状态栏美化vim-airline插件:
+	Plug 'vim-airline/vim-airline'
+	Plug 'vim-airline/vim-airline-themes'
+增加代码缩进线条indentline:
+
+Plug'w0ng/vim-hybrid'
+
+配色方案:
+vim-hybird
+solarized
+gruvbox
+
+nerdtree:文件目录树
+:NERDTree <cr>
+
+模糊搜索器插件：ctrlp
+let g:ctrlp_map='<<F12>c-p>'
+
+
+快速定位插件：easymotion
+nmap ss <Plug>(easymotion-s2)
+
+引号插件：vim-surround(normal模式)
+ys: ys iw "
+cs: cs " ' /cs ( ]
+ds: ds '
+
+
+命令行模糊搜索：fzf/fzf.vim
+Ag[PATTERN]模糊搜索字符串
+Files[PATH]模糊搜索路径
+
+替换插件：far.vim
+:Far .. 。。**/??(替换内容 替换文件范围)
+:Fardo
+
+golang插件：vim-go
+
+python插件：python-mode
+
+浏览插件：vim tagbar
+:TagbarToggle
+<cr>
+
+高亮插件:vim-interestingwords
+,k 高亮
+,K 清楚高亮
+
+
+代码补全插件：deoplete.nvim coc.nvim
+ctrl +x+o补全
+ctrl +k 退出
+
+格式化：Neoformat/vim-autoformat
+:Neoformat
+
+
+静态检查lint：neomake/ale
+
+快速注释：vim-commentary
+gc注释多行 gcgc取消注释
+gcc注释单行 gc取消注释
+
+
+git插件：Fugitive
+Gedirt
+Gdiff
+Gblame
+Gcommit
+
+文件变动：vim-gitgutter
+
+提交记录：gv.vim 需要fugitive
+:GV
+
+tmux:
+https://www.cnblogs.com/kevingrace/p/6496899.html
