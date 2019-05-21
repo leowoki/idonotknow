@@ -168,6 +168,13 @@ github
 	2.内容简单时
 		git pull [远程库地址别名] [远程分支名]
 
+	理解git本地分支以及远程分支：
+		1.创建本地分支，如何关联远程分支
+			git push --set-upstream origin branch_name
+		2.远程有分支，本地没有分支，ruhezhuizong
+			git checkout --track origin/branch_name
+
+
 解决冲突：
 	要点：
 		如果不是基于Github远程库的最新版所做的修改，不能推送，必须先拉取
