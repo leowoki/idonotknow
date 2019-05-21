@@ -240,6 +240,7 @@ GitFlow分支种类：
 
 Gitlab服务器搭建过程：
 。。。。
+初始化问题： Error executing action `run` on resource 'bash[migrate gitlab-rails database]'
 
 gitlab服务操作：
 	初始化配置gitlab
