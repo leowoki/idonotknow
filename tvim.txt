@@ -79,7 +79,7 @@ ctrl+x ctrl+O 补全代码
 
 配色:
 :colorscheme 显示当前配色
-:solorscheme <ctrl+d> 显示所有配色
+:colorscheme <ctrl+d> 显示所有配色
 :colorscheme 配色名 修改配色
 
 
